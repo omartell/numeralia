@@ -35,28 +35,25 @@
    1000 "thousand"})
 
 (defn number->english [original-number]
-  (if-let [predefined (get base-mappings original-number)]
-    predefined
-    (loop [current-number original-number
-           sentence       ""]
-      (if-let [predefined (get base-mappings current-number)]
-        (if (> current-number 0)
-          (str sentence predefined)
-          sentence)
-        (let [order-of-magnitude     (int (java.lang.Math/pow 10 (int (java.lang.Math/log10 current-number))))
-              most-significant-digit (int (/ current-number order-of-magnitude))
-              most-significant-value (* most-significant-digit order-of-magnitude)
-              remaining-value        (- current-number most-significant-value)]
-          (case order-of-magnitude
-            10 (str sentence
-                    (get base-mappings most-significant-value)
-                    "-"
-                    (get base-mappings remaining-value))
-            (recur remaining-value
-                   (str sentence
-                        (get base-mappings most-significant-digit)
-                        " "
-                        (get magnitudes order-of-magnitude)
-                        (when (and (< remaining-value 100)
-                                   (> remaining-value 0))
-                          " and ")))))))))
+  (loop [current-number original-number
+         sentence       ""]
+    (if-let [predefined (get base-mappings current-number)]
+      (str sentence predefined)
+      (let [most-significant-magnitude (int (java.lang.Math/pow 10 (int (java.lang.Math/log10 current-number))))
+            most-significant-digit     (int (/ current-number most-significant-magnitude))
+            most-significant-value     (* most-significant-digit most-significant-magnitude)
+            remaining-value            (- current-number most-significant-value)
+            updated-sentence           (case most-significant-magnitude
+                                         10 (str sentence
+                                                 (get base-mappings most-significant-value)
+                                                 "-")
+                                         (str sentence
+                                              (get base-mappings most-significant-digit)
+                                              " "
+                                              (get magnitudes most-significant-magnitude)
+                                              (when (and (< remaining-value 100)
+                                                         (> remaining-value 0))
+                                                " and ")))]
+        (if (> remaining-value 0)
+          (recur remaining-value updated-sentence)
+          updated-sentence)))))
