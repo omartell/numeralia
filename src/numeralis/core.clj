@@ -34,7 +34,7 @@
   {100  "hundred"
    1000 "thousand"})
 
-(defn number->english-phrase [original-number]
+(defn number->english [original-number]
   (if-let [predefined (get base-mappings original-number)]
     predefined
     (loop [current-number original-number
