@@ -21,4 +21,5 @@
   (is (= "one million and one" (number->english 1000001)))
   (is (= "one hundred million" (number->english 100000000)))
   (is (= "one billion" (number->english 1000000000)))
-  (is (= "one billion, three hundred and forty-two million and twenty" (number->english 1342000020))))
+  (is (= "one billion, three hundred and forty-two million and twenty" (number->english 1342000020)))
+  (is (thrown? java.lang.AssertionError (number->english -1))))
