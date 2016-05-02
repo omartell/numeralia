@@ -1,6 +1,6 @@
 (ns numeralis.core)
 
-(def base-mappings
+(def ^:private base-mappings
   {0  "zero"
    1  "one"
    2  "two"
@@ -30,30 +30,50 @@
    80 "eighty"
    90 "ninety"})
 
-(def magnitudes
-  {100  "hundred"
-   1000 "thousand"})
+(defn- magnitudes [n]
+  "Given a number n smaller than one billion, return its most significant magnitude"
+  (cond
+    (and (>= n 10) (< n 100))                           {:magnitude 10 :symbol nil}
+    (and (>= n 100) (< n 1000))                         {:magnitude 100 :symbol "hundred"}
+    (and (>= n 1000) (< n (Math/pow 10 6)))             {:magnitude 1000 :symbol "thousand"}
+    (and (>= n (Math/pow 10 6)) (< n (Math/pow 10 9)))  {:magnitude 1000000 :symbol "million"}
+    (and (>= n (Math/pow 10 9)) (< n (Math/pow 10 12))) {:magnitude 1000000000 :symbol "billion"}))
 
-(defn number->english [original-number]
-  (loop [current-number original-number
-         sentence       ""]
-    (if-let [predefined (get base-mappings current-number)]
-      (str sentence predefined)
-      (let [most-significant-magnitude (int (java.lang.Math/pow 10 (int (java.lang.Math/log10 current-number))))
-            most-significant-digit     (int (/ current-number most-significant-magnitude))
-            most-significant-value     (* most-significant-digit most-significant-magnitude)
-            remaining-value            (- current-number most-significant-value)
-            updated-sentence           (case most-significant-magnitude
-                                         10 (str sentence
-                                                 (get base-mappings most-significant-value)
-                                                 "-")
-                                         (str sentence
-                                              (get base-mappings most-significant-digit)
-                                              " "
-                                              (get magnitudes most-significant-magnitude)
-                                              (when (and (< remaining-value 100)
-                                                         (> remaining-value 0))
-                                                " and ")))]
+(defn- first-hundred->english [n]
+  "Given a number n within 0 to 99, return its representation in British English"
+  (let [most-significant-magnitude (long (Math/pow 10 (long (Math/log10 (Math/max (long n) 1)))))
+        most-significant-digit     (long (/ n most-significant-magnitude))
+        most-significant-value     (* most-significant-digit most-significant-magnitude)
+        remaining-value            (- n most-significant-value)]
+    (case most-significant-magnitude
+      1  (get base-mappings most-significant-value)
+      10 (if-let [predefined (get base-mappings n)]
+           predefined
+           (str (get base-mappings most-significant-value)
+                (when (> remaining-value 0)
+                  (str "-"
+                       (get base-mappings remaining-value)))))
+      nil)))
+
+(defn number->english [n]
+  "Given any number n smaller than one billion, return its representation in British English"
+  (loop [current  n
+         sentence ""]
+    (if-let [small-number (first-hundred->english current)]
+      (str sentence small-number)
+      (let [most-significant-magnitude (long (Math/pow 10 (long (Math/log10 current))))
+            magnitude-representation   (magnitudes most-significant-magnitude)
+            most-significant-value     (long (/ current (:magnitude magnitude-representation)))
+            represented-value          (* most-significant-value (:magnitude magnitude-representation))
+            remaining-value            (- current represented-value)
+            connecting-string          (fn [n] (cond
+                                                 (and (< n 100) (> n 0)) " and "
+                                                 (> n 0)                 ", "))
+            updated-sentence           (str sentence
+                                            (number->english most-significant-value)
+                                            " "
+                                            (:symbol magnitude-representation)
+                                            (connecting-string remaining-value))]
         (if (> remaining-value 0)
           (recur remaining-value updated-sentence)
           updated-sentence)))))
