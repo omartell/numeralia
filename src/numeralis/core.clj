@@ -41,7 +41,7 @@
 
 (defn- first-hundred->english [n]
   "Given a positive whole number n within 0 to 99, return its representation in British English"
-  (let [most-significant-magnitude (long (Math/pow 10 (long (Math/log10 (Math/max (long n) 1)))))
+  (let [most-significant-magnitude (->> (Math/max (long n) 1) Math/log10 long (Math/pow 10) long)
         most-significant-digit     (long (/ n most-significant-magnitude))
         most-significant-value     (* most-significant-digit most-significant-magnitude)
         remaining-value            (- n most-significant-value)]
@@ -51,8 +51,7 @@
            predefined
            (str (get base-mappings most-significant-value)
                 (when (> remaining-value 0)
-                  (str "-"
-                       (get base-mappings remaining-value)))))
+                  (str "-" (get base-mappings remaining-value)))))
       nil)))
 
 (defn number->english [n]
@@ -62,7 +61,7 @@
          sentence ""]
     (if-let [small-number (first-hundred->english current)]
       (str sentence small-number)
-      (let [most-significant-magnitude (long (Math/pow 10 (long (Math/log10 current))))
+      (let [most-significant-magnitude (->> current Math/log10 long (Math/pow 10) long)
             magnitude-representation   (magnitudes most-significant-magnitude)
             most-significant-value     (long (/ current (:magnitude magnitude-representation)))
             represented-value          (* most-significant-value (:magnitude magnitude-representation))
