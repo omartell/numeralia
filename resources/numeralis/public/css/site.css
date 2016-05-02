@@ -31,7 +31,7 @@
 
 .welcome code {
     font-family: Menlo, DejaVu Sans Mono, Lucida Console, monospace;
-    font-size: 12px;
+    font-size: 16px;
     background: #ddd;
     color: #111;
 }
@@ -66,7 +66,7 @@
 }
 
 .welcome .profiles code {
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .welcome .profiles h2 {

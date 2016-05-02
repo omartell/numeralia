@@ -3,21 +3,18 @@
             [com.stuartsierra.component :as component]
             [duct.component.endpoint :refer [endpoint-component]]
             [duct.component.handler :refer [handler-component]]
-            [duct.middleware.not-found :refer [wrap-not-found]]
             [duct.middleware.route-aliases :refer [wrap-route-aliases]]
             [meta-merge.core :refer [meta-merge]]
             [ring.component.jetty :refer [jetty-server]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [ring.middleware.webjars :refer [wrap-webjars]]
-            [numeralis.endpoint.example :refer [example-endpoint]]))
+            [ring.middleware.format :refer [wrap-restful-format]]
+            [numeralis.endpoint.numerals :refer [numerals-endpoint]]))
 
 (def base-config
-  {:app {:middleware [[wrap-not-found :not-found]
-                      [wrap-webjars]
+  {:app {:middleware [[wrap-restful-format]
                       [wrap-defaults :defaults]
                       [wrap-route-aliases :aliases]]
-         :not-found  (io/resource "numeralis/errors/404.html")
-         :defaults   (meta-merge site-defaults {:static {:resources "numeralis/public"}})
+         :defaults  (meta-merge site-defaults {:static {:resources "numeralis/public"}})
          :aliases    {"/" "/index.html"}}})
 
 (defn new-system [config]
@@ -25,7 +22,7 @@
     (-> (component/system-map
          :app  (handler-component (:app config))
          :http (jetty-server (:http config))
-         :example (endpoint-component example-endpoint))
+         :example (endpoint-component numerals-endpoint))
         (component/system-using
          {:http [:app]
           :app  [:example]
