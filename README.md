@@ -1,6 +1,26 @@
-# numeralia
+# Numeralia
 
-FIXME: description
+Translate numbers into English 🇬🇧
+
+## Usage
+
+Send a GET request to `/numerals/{n}` with your number. You can click on the following links to see a few examples: [172](http://numeralia.herokuapp.com/numerals/172), [1,789](http://numeralia.herokuapp.com/numerals/1789), [9,873,456](http://numeralia.herokuapp.com/numerals/9873456).
+
+Alternatively, use a tool like CURL to change the Accept header and get different representations:
+
+JSON
+```
+curl -i -H "Accept: application/json" http://numeralia.herokuapp.com/numerals/279
+```
+EDN
+```
+curl -i -H "Accept: application/edn" http://numeralia.herokuapp.com/numerals/72341
+```
+YAML
+```
+curl -i -H "Accept: application/x-yaml" http://numeralia.herokuapp.com/numerals/384347
+```
+
 
 ## Developing
 
@@ -65,15 +85,6 @@ But you can also run tests through Leiningen.
 lein test
 ```
 
-### Generators
-
-This project has several [generators][] to help you create files.
-
-* `lein gen endpoint <name>` to create a new endpoint
-* `lein gen component <name>` to create a new component
-
-[generators]: https://github.com/weavejester/lein-generate
-
 ## Deploying
 
 To deploy the project, run:
@@ -84,4 +95,4 @@ lein deploy
 
 ## Legal
 
-Copyright © 2016 FIXME
+Copyright © 2016 Oliver Martell
