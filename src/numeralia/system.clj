@@ -22,8 +22,8 @@
     (-> (component/system-map
          :app  (handler-component (:app config))
          :http (jetty-server (:http config))
-         :example (endpoint-component numerals-endpoint))
+         :numerals (endpoint-component numerals-endpoint))
         (component/system-using
          {:http [:app]
-          :app  [:example]
-          :example []}))))
+          :app  [:numerals]
+          :numerals []}))))
