@@ -1,4 +1,4 @@
-(defproject numeralis "0.1.0-SNAPSHOT"
+(defproject numeralia "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -17,9 +17,9 @@
   :plugins [[lein-environ "1.0.2"]
             [lein-gen "0.2.2"]]
   :generators [[duct/generators "0.5.10"]]
-  :duct {:ns-prefix numeralis}
-  :main ^:skip-aot numeralis.main
-  :uberjar-name "numeralis-standalone.jar"
+  :duct {:ns-prefix numeralia}
+  :main ^:skip-aot numeralia.main
+  :uberjar-name "numeralia-standalone.jar"
   :target-path "target/%s/"
   :aliases {"gen"    ["generate"]
             "setup"  ["do" ["generate" "locals"]]

@@ -1,1 +1,1 @@
-web: java -jar target/uberjar/numeralis-standalone.jar
+web: java -jar target/uberjar/numeralia-standalone.jar

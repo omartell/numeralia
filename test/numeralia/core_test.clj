@@ -1,6 +1,6 @@
-(ns numeralis.core-test
+(ns numeralia.core-test
   (:require [clojure.test :refer :all]
-            [numeralis.core :refer :all]))
+            [numeralia.core :refer :all]))
 
 (deftest test-number->english
   (is (= "zero" (number->english 0)))

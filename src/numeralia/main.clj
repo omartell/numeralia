@@ -1,12 +1,12 @@
-(ns numeralis.main
+(ns numeralia.main
   (:gen-class)
   (:require [clojure.java.io :as io]
             [com.stuartsierra.component :as component]
             [duct.middleware.errors :refer [wrap-hide-errors]]
             [duct.util.runtime :refer [add-shutdown-hook]]
             [meta-merge.core :refer [meta-merge]]
-            [numeralis.config :as config]
-            [numeralis.system :refer [new-system]]))
+            [numeralia.config :as config]
+            [numeralia.system :refer [new-system]]))
 
 (def prod-config
   {:app {:middleware     [[wrap-hide-errors :internal-error]]

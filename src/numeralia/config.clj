@@ -1,4 +1,4 @@
-(ns numeralis.config
+(ns numeralia.config
   (:require [environ.core :refer [env]]))
 
 (def defaults

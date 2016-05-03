@@ -1,5 +1,5 @@
-(ns numeralis.endpoint.numerals-test
-  (:require [numeralis.endpoint.numerals :refer [numerals-endpoint]]
+(ns numeralia.endpoint.numerals-test
+  (:require [numeralia.endpoint.numerals :refer [numerals-endpoint]]
             [ring.mock.request :as mock]
             [clojure.test :refer :all]))
 

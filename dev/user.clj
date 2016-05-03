@@ -8,8 +8,8 @@
             [meta-merge.core :refer [meta-merge]]
             [reloaded.repl :refer [system init start stop go reset]]
             [ring.middleware.stacktrace :refer [wrap-stacktrace]]
-            [numeralis.config :as config]
-            [numeralis.system :as system]))
+            [numeralia.config :as config]
+            [numeralia.system :as system]))
 
 (def dev-config
   {:app {:middleware [wrap-stacktrace]}})

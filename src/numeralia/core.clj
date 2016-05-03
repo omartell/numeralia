@@ -1,4 +1,4 @@
-(ns numeralis.core)
+(ns numeralia.core)
 
 (def ^:private english-numbers
   {1          "one"

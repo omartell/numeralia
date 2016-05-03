@@ -1,5 +1,5 @@
-(ns numeralis.endpoint.numerals
-  (:require [numeralis.core :refer [number->english]]
+(ns numeralia.endpoint.numerals
+  (:require [numeralia.core :refer [number->english]]
             [compojure.core :refer :all]
             [ring.util.response :refer [response status]]))
 
