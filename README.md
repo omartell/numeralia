@@ -4,7 +4,7 @@ Translate numbers into English 🇬🇧
 
 ## Usage
 
-Send a GET request to `/numerals/{n}` with your number. You can click on the following links to see a few examples: [172](http://numeralia.herokuapp.com/numerals/172), [1,789](http://numeralia.herokuapp.com/numerals/1789), [9,873,456](http://numeralia.herokuapp.com/numerals/9873456).
+Send a GET request to `/numerals/{n}` with a number smaller than one trillion. You can click on the following links to see a few examples: [172](http://numeralia.herokuapp.com/numerals/172), [1,789](http://numeralia.herokuapp.com/numerals/1789), [9,873,456](http://numeralia.herokuapp.com/numerals/9873456).
 
 Alternatively, use a tool like CURL to change the Accept header and get different representations:
 
