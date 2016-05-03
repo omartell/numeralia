@@ -1,4 +1,4 @@
-# Numeralia
+# Numeralia [![Circle CI](https://circleci.com/gh/omartell/numeralia.svg?style=svg&circle-token=e34d9add3b46a9779014df53f1fbd498586eddda)](https://circleci.com/gh/omartell/numeralia)
 
 Translate numbers into English 🇬🇧
 
