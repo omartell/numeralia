@@ -9,5 +9,8 @@
       (response {"number"  (Long/parseLong n)
                  "english" (number->english (Long/parseLong n))})
       (catch java.lang.NumberFormatException _e
-        (-> (response {"error" "Invalid Number. Must be within zero and one billion."})
+        (-> (response {"error" "Invalid Number Format"})
+            (status 400)))
+      (catch java.lang.AssertionError _e
+        (-> (response {"error" "Number is out of range"})
             (status 400))))))

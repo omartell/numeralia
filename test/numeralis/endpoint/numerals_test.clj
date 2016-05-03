@@ -13,7 +13,11 @@
             :body    {"number"  1
                       "english" "one"}}
            (handler (mock/request :get "/numerals/1")))))
-  (testing "returns a bad request response when the number can't be translated"
+  (testing "returns a bad request response when the number format is not valid"
     (is (= 400
            (-> (handler (mock/request :get "/numerals/foobar"))
+               :status))))
+  (testing "returns a bad request response when the number is out of range"
+    (is (= 400
+           (-> (handler (mock/request :get "/numerals/-1"))
                :status)))))

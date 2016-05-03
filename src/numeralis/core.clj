@@ -31,7 +31,7 @@
    90 "ninety"})
 
 (defn- magnitudes [n]
-  "Given a number n smaller than one billion, return its most significant magnitude"
+  "Given a number n smaller than one trillion, return its most significant magnitude."
   (cond
     (and (>= n 10) (< n 100))                           {:magnitude 10 :symbol nil}
     (and (>= n 100) (< n 1000))                         {:magnitude 100 :symbol "hundred"}
@@ -40,7 +40,7 @@
     (and (>= n (Math/pow 10 9)) (< n (Math/pow 10 12))) {:magnitude 1000000000 :symbol "billion"}))
 
 (defn- first-hundred->english [n]
-  "Given a positive whole number n within 0 to 99, return its representation in British English"
+  "Given a positive whole number n within 0 to 99, return its representation in British English."
   (let [most-significant-magnitude (->> (Math/max (long n) 1) Math/log10 long (Math/pow 10) long)
         most-significant-digit     (long (/ n most-significant-magnitude))
         most-significant-value     (* most-significant-digit most-significant-magnitude)
@@ -55,8 +55,9 @@
       nil)))
 
 (defn number->english [n]
-  {:pre [(or (zero? n) (pos? n))]}
-  "Given any postive whole number n smaller than one billion, return its representation in British English"
+  {:pre [(and (>= n 0) (< n (Math/pow 10 12)))]}
+  "Given a number within 0 (inclusive) and one trillion (not inclusive),
+   return its representation in British English."
   (loop [current  n
          sentence ""]
     (if-let [small-number (first-hundred->english current)]
