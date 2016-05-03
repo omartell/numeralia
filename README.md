@@ -21,6 +21,12 @@ YAML
 curl -i -H "Accept: application/x-yaml" http://numeralia.herokuapp.com/numerals/384347
 ```
 
+## Structure
+- The core of the translation logic is defined in [numeralia.core](https://github.com/omartell/numeralia/blob/master/src/numeralia/core.clj) and the main function that does the actual conversion is [`number->english`](https://github.com/omartell/numeralia/blob/master/src/numeralia/core.clj#L36).
+- The endpoint `/numerals` is defined in [numeralia.endpoint.numerals](https://github.com/omartell/numeralia/blob/master/src/numeralia/endpoint/numerals.clj) to accept HTTP GET requests to translate numbers.
+- The project uses [duct](http://github.com/weavejester/duct) as a template for the project to facilitate setup and deployment to heroku.
+- The request accept header and response content type is handled by a ring middleware provided by [ring.middleware.format](https://github.com/ngrunwald/ring-middleware-format).
+- The application gets bootstrapped using [component](http://github.com/stuartsierra/component) by defining a handler, endpoint and server component in [system.clj](https://github.com/omartell/numeralia/blob/master/src/numeralia/system.clj). The entry point is in [main.clj](https://github.com/omartell/numeralia/blob/master/src/numeralia/main.clj).
 
 ## Developing
 
